@@ -1,0 +1,45 @@
+---
+title: "Boston Crime Map"
+author: "Michael Sauter"
+date: "5-AUG-2018"
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+The data for this map is taken from the Boston Crime dataset started in 2015.The lots of datasets for Boston are available here: https://data.boston.gov/dataset
+
+
+## Introduction
+
+This project was created as part of the Developing Data Products course of the Coursera [Data Science Specialisation](https://www.coursera.org/specializations/jhu-data-science). The goal of the project is to create a web page using R Markdown that features a map created with Leaflet, and to host the resulting web page on either GitHub Pages, RPubs, or NeoCities.
+
+## Map of passenger traffic
+
+The following map represents reported crimes in Boston since 2015.It even shows some mis reported location in the Atlantic next to central Africa.
+
+## Reading Data
+
+Reading data from csv file in home directory, column 4 and 5, and subsetting to extract 1000 random sample.  
+
+```{r, echo=TRUE, results=FALSE}
+data <- "bostoncrime.csv"
+df <- read.csv(data              )
+df <- df[sample(nrow(df), 1000), c(4,5)]
+
+```
+ 
+
+## Plotting Map
+
+The map below shows a clustered view of all the spots where crimes were recorded in Boston since 2015. 
+
+```{r Leaflet, echo=TRUE}
+library(leaflet)
+
+df %>%
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers(clusterOptions = markerClusterOptions())
+
+```
